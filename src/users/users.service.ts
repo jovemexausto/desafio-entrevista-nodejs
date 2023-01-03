@@ -17,7 +17,7 @@ export class UsersService {
     });
   }
 
-  findByUsername(username: string) {
+  findByUsername(username: string): Promise<Partial<User>> {
     return User.findOne({
       where: {
         username,
