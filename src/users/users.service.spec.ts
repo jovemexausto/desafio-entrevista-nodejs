@@ -21,6 +21,7 @@ describe('UsersService', () => {
 
   it('should add a new user', async () => {
     const user = await usersService.create({
+      parkingId: 1,
       username: 'john.doe',
       password: '123456',
     });
@@ -56,7 +57,7 @@ describe('UsersService', () => {
 
   it('should remove a user by id', async () => {
     await usersService.remove(userId);
-    expect(await usersService.findOne(userId)).toBeNull();
+    expect(() => usersService.findOne(userId)).rejects.toThrow();
   });
 
   afterAll(async () => {

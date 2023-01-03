@@ -10,7 +10,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return User.findOne({
+    return User.findOneOrFail({
       where: {
         id,
       },
@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   findByUsername(username: string): Promise<Partial<User>> {
-    return User.findOne({
+    return User.findOneOrFail({
       where: {
         username,
       },
@@ -32,7 +32,7 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await User.findOne({
+    const user = await User.findOneOrFail({
       where: {
         id,
       },

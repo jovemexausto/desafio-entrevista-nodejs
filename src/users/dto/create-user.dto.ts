@@ -17,8 +17,8 @@ export class CreateUserDto {
    * The user's parking reference
    * @example '1'
    */
-  @IsOptional()
-  parkingId?: number;
+  @IsNotEmpty()
+  parkingId: number;
 
   /**
    * The user's role, default is 'admin'
