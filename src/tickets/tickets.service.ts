@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { FindOptionsWhere } from 'typeorm';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
 export class TicketsService {
-  findAll() {
+  findAll(): Promise<Partial<Ticket>[]> {
     return Ticket.find();
   }
 
-  findAllByParkingId(parkingId: number) {
+  findAllByParkingId(parkingId: number): Promise<Partial<Ticket>[]> {
     return Ticket.find({
       where: {
         parkingId,
@@ -30,6 +31,12 @@ export class TicketsService {
       where: {
         id,
       },
+    });
+  }
+
+  findBy(params: FindOptionsWhere<Ticket>): Promise<Partial<Ticket>[]> {
+    return Ticket.find({
+      where: params,
     });
   }
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { In } from 'typeorm';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { Vehicle } from './entities/vehicle.entity';
@@ -9,7 +10,11 @@ export class VehiclesService {
     return Vehicle.find();
   }
 
-  findOne(id: number) {
+  findAllByIds(ids: number[]): Promise<Partial<Vehicle>[]> {
+    return Vehicle.findBy({ id: In(ids) });
+  }
+
+  findOne(id: number): Promise<Partial<Vehicle>> {
     return Vehicle.findOneOrFail({
       where: {
         id,
@@ -25,7 +30,7 @@ export class VehiclesService {
     });
   }
 
-  async create(createVehicleDto: CreateVehicleDto) {
+  async create(createVehicleDto: CreateVehicleDto): Promise<Partial<Vehicle>> {
     const vehicle = new Vehicle();
     Object.assign(vehicle, createVehicleDto);
     return await vehicle.save();
