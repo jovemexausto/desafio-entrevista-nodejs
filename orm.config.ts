@@ -25,12 +25,9 @@ export const TestDataSourceConfig: DataSourceOptions = {
   subscribers: [],
 };
 
-export const AppDataSourceFactory = (options?: DataSourceOptions) => {
-  return new DataSource(
-    // eslint-disable-next-line prettier/prettier
-    options ||
-    process.env.NODE_ENV === 'test' ? TestDataSourceConfig : AppDataSourceConfig,
-  );
-};
+const config =
+  process.env.NODE_ENV === 'test' ? TestDataSourceConfig : AppDataSourceConfig;
 
-export const AppDataSource = AppDataSourceFactory();
+export const AppDataSource = new DataSource(config);
+
+export default config;
