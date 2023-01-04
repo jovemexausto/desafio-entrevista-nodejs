@@ -1,4 +1,6 @@
+import { VehicleTypes } from 'src/vehicles/entities/vehicle.entity';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -6,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Ticket {
+export class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,12 +16,12 @@ export class Ticket {
   status: 'entered' | 'exited';
 
   @Column()
-  type: 'car' | 'motorcycle';
+  type: VehicleTypes;
 
   @CreateDateColumn()
   enteredAt: Date;
 
-  @Column({ nullable: true, type: 'timestamp' })
+  @Column({ nullable: true })
   exitedAt?: Date;
 
   @Column()

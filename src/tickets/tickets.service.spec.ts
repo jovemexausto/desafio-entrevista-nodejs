@@ -1,4 +1,6 @@
+import { TestDataSourceConfig } from '@/orm.config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { TicketsService } from './tickets.service';
 
@@ -13,6 +15,7 @@ describe('TicketsService', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TypeOrmModule.forRoot(TestDataSourceConfig)],
       providers: [TicketsService],
     }).compile();
 
@@ -20,7 +23,7 @@ describe('TicketsService', () => {
   });
 
   it('should add a new ticket', async () => {
-    const ticket = service.create(ticketFixture as CreateTicketDto);
+    const ticket = await service.create(ticketFixture as CreateTicketDto);
     expect(ticket).toHaveProperty('id');
   });
 
@@ -37,16 +40,11 @@ describe('TicketsService', () => {
   });
 
   it('should update a ticket by id', async () => {
-    const ticket = service.update(1, {
+    const ticket = await service.update(1, {
       status: 'exited',
     });
     expect(ticket).toBeDefined();
     expect(ticket).toHaveProperty('id');
-  });
-
-  it('should remove a ticket by id', () => {
-    service.remove(1);
-    expect(service.findOne(1)).toBeUndefined();
   });
 
   it('should return a list of tickets by parking id', async () => {
@@ -59,5 +57,10 @@ describe('TicketsService', () => {
     const tickets = await service.findAllByVehicleId(1);
     expect(tickets).toBeDefined();
     expect(tickets.length).toBeGreaterThan(0);
+  });
+
+  it('should remove a ticket by id', async () => {
+    await service.remove(1);
+    expect(service.findOne(1)).rejects.toThrow();
   });
 });
