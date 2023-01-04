@@ -1,8 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
+export type VehicleTypes = typeof Vehicle.types[number];
+
 @Entity()
 export class Vehicle extends BaseEntity {
-  static readonly types = ['car', 'motorcycle'];
+  static readonly types = ['car', 'motorcycle'] as const;
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,5 +25,5 @@ export class Vehicle extends BaseEntity {
   year: number;
 
   @Column()
-  type: string;
+  type: VehicleTypes;
 }

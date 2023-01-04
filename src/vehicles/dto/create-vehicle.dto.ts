@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsInt, IsNotEmpty } from 'class-validator';
-import { Vehicle } from '../entities/vehicle.entity';
+import { Vehicle, VehicleTypes } from '../entities/vehicle.entity';
 
 export class CreateVehicleDto {
   /**
@@ -45,5 +45,5 @@ export class CreateVehicleDto {
    */
   @ApiProperty({ enum: Vehicle.types })
   @IsEnum(Vehicle.types)
-  type: string;
+  type: VehicleTypes;
 }
