@@ -778,6 +778,83 @@
         ]
       }
     },
+    "/parkings/{id}/parkById": {
+      "post": {
+        "operationId": "ParkingsController_parkById",
+        "summary": "Parks a vehicle by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The parking id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicle has been successfully parked.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      }
+    },
+    "/parkings/{id}/park": {
+      "post": {
+        "operationId": "ParkingsController_park",
+        "summary": "Parks a new vehicle created from the given data",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The parking id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The vehicle to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVehicleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The vehicle has been successfully parked.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      }
+    },
     "/tickets": {
       "post": {
         "operationId": "TicketsController_create",
@@ -1460,31 +1537,6 @@
           }
         }
       },
-      "CreateTicketDto": {
-        "type": "object",
-        "properties": {
-          "vehicleType": {
-            "type": "object",
-            "description": "The type of the vehicle",
-            "example": "car"
-          },
-          "vehicleId": {
-            "type": "number",
-            "description": "The id of the vehicle",
-            "example": 1
-          },
-          "parkingId": {
-            "type": "number",
-            "description": "The id of the parking",
-            "example": 1
-          }
-        },
-        "required": [
-          "vehicleType",
-          "vehicleId",
-          "parkingId"
-        ]
-      },
       "Ticket": {
         "type": "object",
         "properties": {
@@ -1517,6 +1569,31 @@
           "status",
           "vehicleType",
           "enteredAt",
+          "vehicleId",
+          "parkingId"
+        ]
+      },
+      "CreateTicketDto": {
+        "type": "object",
+        "properties": {
+          "vehicleType": {
+            "type": "object",
+            "description": "The type of the vehicle",
+            "example": "car"
+          },
+          "vehicleId": {
+            "type": "number",
+            "description": "The id of the vehicle",
+            "example": 1
+          },
+          "parkingId": {
+            "type": "number",
+            "description": "The id of the parking",
+            "example": 1
+          }
+        },
+        "required": [
+          "vehicleType",
           "vehicleId",
           "parkingId"
         ]
