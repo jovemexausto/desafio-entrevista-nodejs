@@ -16,7 +16,7 @@ export class Ticket extends BaseEntity {
   status: 'entered' | 'exited';
 
   @Column()
-  type: VehicleTypes;
+  vehicleType: VehicleTypes;
 
   @CreateDateColumn()
   enteredAt: Date;

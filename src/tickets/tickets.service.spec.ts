@@ -7,7 +7,7 @@ import { TicketsService } from './tickets.service';
 const ticketFixture: CreateTicketDto = {
   parkingId: 1,
   vehicleId: 1,
-  type: 'car',
+  vehicleType: 'car',
 };
 
 describe('TicketsService', () => {

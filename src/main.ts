@@ -14,11 +14,7 @@ async function bootstrap(app: INestApplication) {
 function createSwaggerDocument(app: INestApplication) {
   const document = SwaggerModule.createDocument(
     app,
-    new DocumentBuilder()
-      .setTitle('Parking API')
-      .setDescription('Interview project')
-      .setVersion('0.0.1')
-      .build(),
+    new DocumentBuilder().setTitle('Parking API').setVersion('0.0.1').build(),
   );
   SwaggerModule.setup('api', app, document);
 }

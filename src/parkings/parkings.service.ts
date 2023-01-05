@@ -106,7 +106,7 @@ export class ParkingsService {
     return this.ticketsService.create({
       vehicleId: vehicle.id,
       parkingId: parking.id,
-      type: vehicle.type,
+      vehicleType: vehicle.type,
     });
   }
 }

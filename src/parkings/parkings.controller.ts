@@ -10,7 +10,9 @@ import {
 import { ParkingsService } from './parkings.service';
 import { CreateParkingDto } from './dto/create-parking.dto';
 import { UpdateParkingDto } from './dto/update-parking.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('parkings')
 @Controller('parkings')
 export class ParkingsController {
   constructor(private readonly parkingsService: ParkingsService) {}

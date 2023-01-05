@@ -3,7 +3,7 @@ export class CreateTicketDto {
    * The type of the vehicle
    * @example 'car'
    */
-  type: 'car' | 'motorcycle';
+  vehicleType: 'car' | 'motorcycle';
 
   /**
    * The id of the vehicle
