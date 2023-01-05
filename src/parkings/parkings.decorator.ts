@@ -1,5 +1,6 @@
 import { Delete, Get, HttpCode, Patch, Post } from '@nestjs/common';
 import {
+  ApiBody,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNoContentResponse,
@@ -10,6 +11,8 @@ import {
 import { CreateParkingDto } from './dto/create-parking.dto';
 import { Parking } from './entities/parking.entity';
 import { applyDecorators } from '@nestjs/common';
+import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { CreateVehicleDto } from 'src/vehicles/dto/create-vehicle.dto';
 
 const parameterId = ':id';
 
@@ -91,6 +94,40 @@ export function DeleteParking(): MethodDecorator {
     }),
     ApiForbiddenResponse({
       description: 'Forbidden.',
+    }),
+  );
+}
+
+export function ParkVehicleById(): MethodDecorator {
+  return applyDecorators(
+    Post(`${parameterId}/parkById`),
+    ApiParam({
+      name: 'id',
+      description: 'The parking id',
+      type: Number,
+    }),
+    ApiOkResponse({
+      description: 'The vehicle has been successfully parked.',
+      type: Ticket,
+    }),
+  );
+}
+
+export function ParkAndCreateVehicle(): MethodDecorator {
+  return applyDecorators(
+    Post(`${parameterId}/park`),
+    ApiParam({
+      name: 'id',
+      description: 'The parking id',
+      type: Number,
+    }),
+    ApiBody({
+      description: 'The vehicle to create',
+      type: CreateVehicleDto,
+    }),
+    ApiOkResponse({
+      description: 'The vehicle has been successfully parked.',
+      type: Ticket,
     }),
   );
 }

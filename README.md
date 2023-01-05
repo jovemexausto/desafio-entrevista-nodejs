@@ -45,6 +45,10 @@ Send a POST request to /auth/login with the above credentials to get the JWT tok
 After that, you can use the token to access the protected routes.
 The token should be sent in the Authorization header with the Bearer prefix.
 
+## Swagger
+Head to http://localhost:3000/api to see the Swagger documentation.
+You can also use docs/api-json.json file to import the API documentation to Postman.
+
 ## Test
 
 ```bash
@@ -57,8 +61,6 @@ $ yarn test:e2e
 # test database connection
 $ yarn test:db
 ```
-
-You can also use docs/api-json.json file to import the API documentation to Postman.
 
 ## Upload image to GPC Container Registry
 

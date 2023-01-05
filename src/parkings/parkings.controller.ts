@@ -8,9 +8,12 @@ import {
   DeleteParking,
   FindParking,
   ListParkings,
+  ParkAndCreateVehicle,
+  ParkVehicleById,
   UpdateParking,
 } from './parkings.decorator';
 import { Roles } from 'src/auth/roles.guard';
+import { CreateVehicleDto } from 'src/vehicles/dto/create-vehicle.dto';
 
 @Roles('root')
 @ApiTags('parkings')
@@ -46,5 +49,21 @@ export class ParkingsController {
   @ApiOperation({ summary: 'Deletes a parking by id' })
   remove(@Param('id') id: string) {
     return this.parkingsService.remove(+id);
+  }
+
+  @ParkVehicleById()
+  @ApiOperation({
+    summary: 'Parks a vehicle by id',
+  })
+  parkById(@Param('id') id: string, @Body() vehicleDto: { vehicleId: number }) {
+    return this.parkingsService.parkVehicleAt(+id, vehicleDto.vehicleId);
+  }
+
+  @ParkAndCreateVehicle()
+  @ApiOperation({
+    summary: 'Parks a new vehicle created from the given data',
+  })
+  park(@Param('id') id: string, @Body() vehicleDto: CreateVehicleDto) {
+    return this.parkingsService.parkVehicleAt(+id, vehicleDto);
   }
 }
