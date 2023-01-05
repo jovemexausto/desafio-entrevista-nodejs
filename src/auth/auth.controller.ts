@@ -1,5 +1,10 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
-import { ApiCreatedResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth';
 import { TokenDto } from './dto/token';
@@ -21,6 +26,7 @@ export class AuthController {
     description: 'The users login token',
     type: TokenDto,
   })
+  @ApiOperation({ summary: 'Get a login token' })
   async login(@Body() authDto: AuthDto) {
     const token = await this.authService.authenticate(authDto);
     if (null === token) {

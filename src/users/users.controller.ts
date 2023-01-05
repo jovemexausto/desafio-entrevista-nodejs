@@ -11,7 +11,9 @@ import {
   UpdateUser,
 } from './users.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.guard';
 
+@Roles('root')
 @ApiTags('users')
 @Controller('users')
 export class UsersController {

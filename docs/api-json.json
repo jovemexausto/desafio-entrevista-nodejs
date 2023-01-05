@@ -1,0 +1,1563 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "summary": "Hello World",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "summary": "Creates a user",
+        "description": "",
+        "parameters": [
+          {
+            "required": true,
+            "description": "The user's username",
+            "example": "johndoe",
+            "name": "username",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The user's password",
+            "example": "123456",
+            "name": "password",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The user's parking reference",
+            "example": 1,
+            "name": "parkingId",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "required": false,
+            "description": "The user's role, default is 'admin'",
+            "example": "root",
+            "name": "role",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The user has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "get": {
+        "operationId": "UsersController_findAll",
+        "summary": "Lists all users",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "summary": "Finds a user by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The user id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "summary": "Updates a user by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The user id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The user has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "summary": "Deletes a user by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "204": {
+            "description": "The user has been successfully deleted."
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Get a login token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The users login token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/vehicles": {
+      "post": {
+        "operationId": "VehiclesController_create",
+        "summary": "Creates a vehicle",
+        "description": "",
+        "parameters": [
+          {
+            "required": true,
+            "description": "The plate of the vehicle",
+            "example": "ABC1234",
+            "name": "plate",
+            "in": "query",
+            "schema": {
+              "pattern": "^[a-zA-Z]{3}[0-9]{4}$",
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The type of the vehicle",
+            "example": "car",
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "car",
+                "motorcycle"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The make of the vehicle",
+            "example": "Ford",
+            "name": "make",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The model of the vehicle",
+            "example": "Fiesta",
+            "name": "model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The color of the vehicle",
+            "example": "red",
+            "name": "color",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The year of the vehicle",
+            "example": 2019,
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVehicleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The vehicle has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "vehicles"
+        ]
+      },
+      "get": {
+        "operationId": "VehiclesController_findAll",
+        "summary": "Lists all vehicles",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of vehicles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vehicle"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "vehicles"
+        ]
+      }
+    },
+    "/vehicles/{id}": {
+      "get": {
+        "operationId": "VehiclesController_findOne",
+        "summary": "Finds a vehicle by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The vehicle id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicle",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "vehicles"
+        ]
+      },
+      "patch": {
+        "operationId": "VehiclesController_update",
+        "summary": "Updates a vehicle by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The vehicle id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVehicleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The vehicle has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "vehicles"
+        ]
+      },
+      "delete": {
+        "operationId": "VehiclesController_remove",
+        "summary": "Deletes a vehicle by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "204": {
+            "description": "The vehicle has been successfully deleted."
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "vehicles"
+        ]
+      }
+    },
+    "/parkings": {
+      "post": {
+        "operationId": "ParkingsController_create",
+        "summary": "Creates a parking",
+        "description": "",
+        "parameters": [
+          {
+            "required": true,
+            "description": "The name of the parking",
+            "example": "Estacionamento do João",
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The CNPJ of the parking",
+            "example": "12345678901234",
+            "name": "cnpj",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The address of the parking",
+            "example": "Rua dos Bobos, 0",
+            "name": "address",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The phone number of the parking",
+            "example": "11999999999",
+            "name": "phone",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "required": true,
+            "description": "The number of car spaces of the parking",
+            "example": 100,
+            "name": "carSpaces",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "required": true,
+            "description": "The number of motorcycle spaces of the parking",
+            "example": 100,
+            "name": "motorcycleSpaces",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParkingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parking"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The parking has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parking"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      },
+      "get": {
+        "operationId": "ParkingsController_findAll",
+        "summary": "Lists all parkings",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of parkings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Parking"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      }
+    },
+    "/parkings/{id}": {
+      "get": {
+        "operationId": "ParkingsController_findOne",
+        "summary": "Finds a parking by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The parking id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The parking",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parking"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      },
+      "patch": {
+        "operationId": "ParkingsController_update",
+        "summary": "Updates a parking by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The parking id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParkingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The parking has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Parking"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      },
+      "delete": {
+        "operationId": "ParkingsController_remove",
+        "summary": "Deletes a parking by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "204": {
+            "description": "The parking has been successfully deleted."
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "parkings"
+        ]
+      }
+    },
+    "/tickets": {
+      "post": {
+        "operationId": "TicketsController_create",
+        "summary": "Creates a ticket",
+        "description": "",
+        "parameters": [
+          {
+            "required": true,
+            "description": "The type of the vehicle",
+            "example": "car",
+            "name": "vehicleType",
+            "in": "query",
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "required": true,
+            "description": "The id of the vehicle",
+            "example": 1,
+            "name": "vehicleId",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "required": true,
+            "description": "The id of the parking",
+            "example": 1,
+            "name": "parkingId",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The ticket has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "tickets"
+        ]
+      },
+      "get": {
+        "operationId": "TicketsController_findAll",
+        "summary": "Lists all tickets",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "tickets"
+        ]
+      }
+    },
+    "/tickets/{id}": {
+      "get": {
+        "operationId": "TicketsController_findOne",
+        "summary": "Finds a ticket by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The ticket id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ticket",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "tickets"
+        ]
+      },
+      "patch": {
+        "operationId": "TicketsController_update",
+        "summary": "Updates a ticket by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The ticket id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTicketDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The ticket has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "tickets"
+        ]
+      },
+      "delete": {
+        "operationId": "TicketsController_remove",
+        "summary": "Deletes a ticket by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "204": {
+            "description": "The ticket has been successfully deleted."
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "tickets"
+        ]
+      }
+    },
+    "/reports/parkings/{parkingId}": {
+      "get": {
+        "operationId": "ReportsController_summary",
+        "summary": "Gets the summary of a parking",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parkingId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The summary of a parking",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ticketsCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "ticketsCarCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "ticketsMotorcycleCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "ticketsEnteredCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "ticketsExitedCount": {
+                      "type": "number",
+                      "example": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/reports/parkings/{parkingId}/hourly": {
+      "get": {
+        "operationId": "ReportsController_hourlySummary",
+        "summary": "Gets the hourly summary of a parking",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parkingId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The hourly summary of a parking",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "2020-01-01 01:00": {
+                      "type": "object",
+                      "properties": {
+                        "ticketsCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "ticketsCarCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "ticketsMotorcycleCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "ticketsEnteredCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "ticketsExitedCount": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Parking API",
+    "description": "",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The user's username",
+            "example": "johndoe"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "example": "123456"
+          },
+          "parkingId": {
+            "type": "number",
+            "description": "The user's parking reference",
+            "example": 1
+          },
+          "role": {
+            "type": "string",
+            "description": "The user's role, default is 'admin'",
+            "example": "root"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "parkingId"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "parkingId": {
+            "type": "number",
+            "nullable": true
+          },
+          "role": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "password",
+          "parkingId",
+          "role"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The user's username",
+            "example": "johndoe"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "example": "123456"
+          },
+          "parkingId": {
+            "type": "number",
+            "description": "The user's parking reference",
+            "example": 1
+          },
+          "role": {
+            "type": "string",
+            "description": "The user's role, default is 'admin'",
+            "example": "root"
+          }
+        }
+      },
+      "AuthDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "TokenDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "CreateVehicleDto": {
+        "type": "object",
+        "properties": {
+          "plate": {
+            "type": "string",
+            "description": "The plate of the vehicle",
+            "example": "ABC1234",
+            "pattern": "^[a-zA-Z]{3}[0-9]{4}$"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the vehicle",
+            "example": "car",
+            "enum": [
+              "car",
+              "motorcycle"
+            ]
+          },
+          "make": {
+            "type": "string",
+            "description": "The make of the vehicle",
+            "example": "Ford"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model of the vehicle",
+            "example": "Fiesta"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the vehicle",
+            "example": "red"
+          },
+          "year": {
+            "type": "number",
+            "description": "The year of the vehicle",
+            "example": 2019
+          }
+        },
+        "required": [
+          "plate",
+          "type",
+          "make",
+          "model",
+          "color",
+          "year"
+        ]
+      },
+      "Vehicle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "make": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "plate": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "type": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "make",
+          "model",
+          "plate",
+          "color",
+          "year",
+          "type"
+        ]
+      },
+      "UpdateVehicleDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the vehicle",
+            "example": "car",
+            "enum": [
+              "car",
+              "motorcycle"
+            ]
+          },
+          "make": {
+            "type": "string",
+            "description": "The make of the vehicle",
+            "example": "Ford"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model of the vehicle",
+            "example": "Fiesta"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the vehicle",
+            "example": "red"
+          },
+          "year": {
+            "type": "number",
+            "description": "The year of the vehicle",
+            "example": 2019
+          }
+        }
+      },
+      "CreateParkingDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the parking",
+            "example": "Estacionamento do João"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "The CNPJ of the parking",
+            "example": "12345678901234"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the parking",
+            "example": "Rua dos Bobos, 0"
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number of the parking",
+            "example": "11999999999"
+          },
+          "carSpaces": {
+            "type": "number",
+            "description": "The number of car spaces of the parking",
+            "example": 100
+          },
+          "motorcycleSpaces": {
+            "type": "number",
+            "description": "The number of motorcycle spaces of the parking",
+            "example": 100
+          }
+        },
+        "required": [
+          "name",
+          "cnpj",
+          "address",
+          "phone",
+          "carSpaces",
+          "motorcycleSpaces"
+        ]
+      },
+      "Parking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cnpj": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "carSpaces": {
+            "type": "number"
+          },
+          "motorcycleSpaces": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "cnpj",
+          "address",
+          "phone",
+          "carSpaces",
+          "motorcycleSpaces"
+        ]
+      },
+      "UpdateParkingDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the parking",
+            "example": "Estacionamento do João"
+          },
+          "cnpj": {
+            "type": "string",
+            "description": "The CNPJ of the parking",
+            "example": "12345678901234"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the parking",
+            "example": "Rua dos Bobos, 0"
+          },
+          "phone": {
+            "type": "string",
+            "description": "The phone number of the parking",
+            "example": "11999999999"
+          },
+          "carSpaces": {
+            "type": "number",
+            "description": "The number of car spaces of the parking",
+            "example": 100
+          },
+          "motorcycleSpaces": {
+            "type": "number",
+            "description": "The number of motorcycle spaces of the parking",
+            "example": 100
+          }
+        }
+      },
+      "CreateTicketDto": {
+        "type": "object",
+        "properties": {
+          "vehicleType": {
+            "type": "object",
+            "description": "The type of the vehicle",
+            "example": "car"
+          },
+          "vehicleId": {
+            "type": "number",
+            "description": "The id of the vehicle",
+            "example": 1
+          },
+          "parkingId": {
+            "type": "number",
+            "description": "The id of the parking",
+            "example": 1
+          }
+        },
+        "required": [
+          "vehicleType",
+          "vehicleId",
+          "parkingId"
+        ]
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "object"
+          },
+          "vehicleType": {
+            "type": "object"
+          },
+          "enteredAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "exitedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "vehicleId": {
+            "type": "number"
+          },
+          "parkingId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "vehicleType",
+          "enteredAt",
+          "vehicleId",
+          "parkingId"
+        ]
+      },
+      "UpdateTicketDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "object",
+            "description": "The status of the ticket",
+            "example": "entered"
+          },
+          "enteredAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date when the ticket was entered",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "exitedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date when the ticket was exited",
+            "example": "2021-01-01T00:00:00.000Z"
+          },
+          "vehicleType": {
+            "type": "object",
+            "description": "The type of the vehicle",
+            "example": "car"
+          },
+          "vehicleId": {
+            "type": "number",
+            "description": "The id of the vehicle",
+            "example": 1
+          },
+          "parkingId": {
+            "type": "number",
+            "description": "The id of the parking",
+            "example": 1
+          }
+        }
+      }
+    }
+  }
+}

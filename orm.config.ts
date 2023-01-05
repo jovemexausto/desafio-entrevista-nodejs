@@ -11,7 +11,7 @@ export const AppDataSourceConfig: DataSourceOptions = {
   synchronize: true,
   logging: false,
   entities: [__dirname + '/src/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/src/database/migrations/*{.ts,.js}'],
+  migrations: [__dirname + '/database/migration/*{.ts,.js}'],
   subscribers: [],
 };
 
@@ -21,7 +21,6 @@ export const TestDataSourceConfig: DataSourceOptions = {
   synchronize: true,
   logging: false,
   entities: [__dirname + '/src/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/src/database/migrations/*{.ts,.js}'],
   subscribers: [],
 };
 

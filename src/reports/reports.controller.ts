@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Param } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { HourlySummary, Summary } from './reports.decorator';
 import { ReportsService } from './reports.service';
 
 @ApiTags('reports')
@@ -7,12 +8,14 @@ import { ReportsService } from './reports.service';
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
-  @Get('/parkings/:parkingId')
+  @ApiOperation({ summary: 'Gets the summary of a parking' })
+  @Summary()
   summary(@Param('parkingId') parkingId: number) {
     return this.reportsService.summary(parkingId);
   }
 
-  @Get('/parkings/:parkingId/hourly')
+  @ApiOperation({ summary: 'Gets the hourly summary of a parking' })
+  @HourlySummary()
   hourlySummary(@Param('parkingId') parkingId: number) {
     return this.reportsService.hourlySummary(parkingId);
   }

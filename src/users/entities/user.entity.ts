@@ -15,5 +15,5 @@ export class User extends BaseEntity {
   parkingId: number | null;
 
   @Column({ default: 'admin' })
-  role: string;
+  role: 'admin' | 'root';
 }

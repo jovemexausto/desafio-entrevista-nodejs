@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:db": "jest --config ./test/jest-e2e.json ./test/database.e2e-spec.ts",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "typeorm-ts-node-esm -d ./orm.config.ts"
+    "typeorm": "typeorm-ts-node-esm -d ./orm.config.ts",
+    "migrate": "yarn typeorm schmea:drop && yarn typeorm migration:run",
+    "seed": "yarn build && node dist/database/seed/seed.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
